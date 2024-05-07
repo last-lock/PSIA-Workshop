@@ -1,0 +1,2 @@
+# Ignore go sum file
+plugins/ldap-connector/go.sum

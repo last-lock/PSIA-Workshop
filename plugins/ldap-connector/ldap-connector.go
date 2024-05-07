@@ -8,18 +8,7 @@ import (
 	ldap "github.com/go-ldap/ldap/v3"
 )
 
-// Initializes persistent connection to AD Domain Server using ldap
-//
-// Parameters:
-//   - a (int): The first integer.
-//   - b (int): The second integer.
-//
-// Returns:
-//   - int: The sum of a and b.
-//
-// Example:
-//   result := Sum(5, 3)
-//   fmt.Println(result) // Output: 8
+// Initializes persistent connection to AD Domain Server using ldap 
 func Persistentconnectioninit(adServer string, baseDN string, bindDN string, bindPassword string) {
     // // Active Directory server details
     // adServer := "ldap://localhost:389"
@@ -75,6 +64,10 @@ func Persistentconnectioninit(adServer string, baseDN string, bindDN string, bin
 }
 
 
+//TODO Export all users out of AD DS during initialization
+func Exportall() {
+
+}
 
 
 
