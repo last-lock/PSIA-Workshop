@@ -1,3 +1,131 @@
+
+// Potentially omit, should be state marked as string
+{
+  "type": "enum",
+  "name": "StateOfCredentialHolder",
+  "symbols": ["Inactive", "Active"]
+},
+{
+  "type": "string",
+  "name": "GlobalID",
+  "doc": "The representation of a GUID, generally the id of an element.",
+  "avro.java.string": "String",
+  "avro.java.string.charset": "UTF-8",
+  "pattern": "\\{[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}\\}"
+}, 
+{
+  "type": "int",
+  "name": "LocalID",
+  "doc": "The representation of a 'Local ID' is based on an unsigned integer which represents, basically, the index in a resource list for a particular item or object. The Local ID is to be used for channels, tracks, zones, areas, regions, hardware I/O ports, etc. Please note that 'zero' (0) is the NULL ID which indicates that a new element/resource needs to be allocated."
+},
+{
+  "type": "record",
+  "name": "ReferenceID",
+  "fields": [
+    {
+      "name": "ID",
+      "type": ["null", "LocalID"],
+      "default": null
+    },
+    {
+      "name": "GUID",
+      "type": "GlobalID"
+    },
+    {
+      "name": "Name",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "CustomExtension",
+      "type": ["null", {
+        "type": "array",
+        "items": "CommonTypeCustomExtension"
+      }],
+      "default": null
+    }
+  ]
+},
+{ 
+
+  "type": "record",
+  "name": "Permission",
+  "fields": [
+    {
+      "name": "ID",
+      "type": "LocalID"
+    },
+    {
+      "name": "UID",
+      "type": "GlobalID"
+    },
+    {
+      "name": "Name",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "Description",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "CustomExtension",
+      "type": ["null", {
+        "type": "array",
+        "items": "CommonTypeCustomExtension"
+      }],
+      "default": null
+    }
+  ]
+},
+{
+  "type": "record",
+  "name": "RoleInfo",
+  "fields": [
+    {
+      "name": "ID",
+      "type": "int"
+    },
+    {
+      "name": "UID",
+      "type": "GlobalID",
+      "doc": "A UID may be used when this definition should be shared across multiple systems."
+    },
+    {
+      "name": "Name",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "Description",
+      "type": ["null", "string"],
+      "default": null
+    },
+
+    {
+      "name": "PermisssionIDList",
+      "type": ["null", {
+        "type": "array",
+        "items": "Permission"
+      }],
+      "default": null
+    }, 
+    {
+      "name": "RoleInfoExtension",
+      "type": ["null", {
+        "type": "array",
+        "items": "AreaControlExtension"
+      }],
+      "default": null
+    }, 
+    {
+      "name": "version",
+      "type": "string",
+      "doc": ""
+    }
+  ]
+},
 {
   "type": "record",
   "name": "CredentialHolderInfo",
@@ -82,13 +210,8 @@
       "doc": "If true, use extended portal access time."
     },
     {
-      "name": "RoleIDList",
-      "type": ["null", "RoleIDList"],
-      "default": null
-    },
-    {
-      "name": "AttributeList",
-      "type": ["null", "AttributeList"],
+      "name": "RoleInfoList",
+      "type": ["null", "RoleInfo"],
       "default": null
     },
     {
@@ -100,21 +223,8 @@
       "default": null
     }
   ]
-}, 
+},
 {
-  "type": "record",
-  "name": "RoleIDList",
-  "fields": [
-    {
-      "name": "RoleID",
-      "type": ["null", {
-        "type": "array",
-        "items": "ReferenceID"
-      }],
-      "default": null
-    }
-  ]
-}, {
   "type": "record",
   "name": "ReferenceID",
   "fields": [
@@ -141,116 +251,5 @@
       "default": null
     }
   ]
-},
-{
-  "type": "string",
-  "name": "GlobalID",
-  "doc": "The representation of a GUID, generally the id of an element.",
-  "avro.java.string": "String",
-  "avro.java.string.charset": "UTF-8",
-  "pattern": "\\{[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}\\}"
-}, 
-{
-  "type": "int",
-  "name": "LocalID",
-  "doc": "The representation of a 'Local ID' is based on an unsigned integer which represents, basically, the index in a resource list for a particular item or object. The Local ID is to be used for channels, tracks, zones, areas, regions, hardware I/O ports, etc. Please note that 'zero' (0) is the NULL ID which indicates that a new element/resource needs to be allocated."
-}, 
-{
-  "type": "record",
-  "name": "RoleInfo",
-  "fields": [
-    {
-      "name": "ID",
-      "type": "int"
-    },
-    {
-      "name": "UID",
-      "type": "GlobalID",
-      "doc": "A UID may be used when this definition should be shared across multiple systems."
-    },
-    {
-      "name": "Name",
-      "type": ["null", "string"],
-      "default": null
-    },
-    {
-      "name": "Description",
-      "type": ["null", "string"],
-      "default": null
-    },
-    {
-      "name": "PermissionIDList",
-      "type": ["null", "PermissionIDList"],
-      "default": null
-    },
-    {
-      "name": "RoleInfoExtension",
-      "type": ["null", {
-        "type": "array",
-        "items": "AreaControlExtension"
-      }],
-      "default": null
-    }, 
-    {
-      "name": "version",
-      "type": "string",
-      "doc": ""
-    }
-  ]
-},
-{ 
-
-  "type": "record",
-  "name": "PermissionInfo",
-  "fields": [
-    {
-      "name": "ID",
-      "type": "LocalID"
-    },
-    {
-      "name": "UID",
-      "type": "GlobalID"
-    },
-    {
-      "name": "Name",
-      "type": ["null", "string"],
-      "default": null
-    },
-    {
-      "name": "Description",
-      "type": ["null", "string"],
-      "default": null
-    },
-    {
-      "name": "CustomExtension",
-      "type": ["null", {
-        "type": "array",
-        "items": "CommonTypeCustomExtension"
-      }],
-      "default": null
-    }
-  ]
-}, 
-// Potentially omit, should be state marked as string
-{
-  "type": "enum",
-  "name": "StateOfCredentialHolder",
-  "symbols": ["Inactive", "Active"]
-}, 
-
-
-{
-  "type": "record",
-  "name": "Attribute",
-  "namespace": "com.example",
-  "fields": [
-    {
-      "name": "name",
-      "type": "string"
-    },
-    {
-      "name": "value",
-      "type": "string"
-    }
-  ]
 }
+
