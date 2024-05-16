@@ -1,255 +1,198 @@
-
-// Potentially omit, should be state marked as string
 {
-  "type": "enum",
-  "name": "StateOfCredentialHolder",
-  "symbols": ["Inactive", "Active"]
-},
-{
-  "type": "string",
-  "name": "GlobalID",
-  "doc": "The representation of a GUID, generally the id of an element.",
-  "avro.java.string": "String",
-  "avro.java.string.charset": "UTF-8",
-  "pattern": "\\{[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}\\}"
-}, 
-{
-  "type": "int",
-  "name": "LocalID",
-  "doc": "The representation of a 'Local ID' is based on an unsigned integer which represents, basically, the index in a resource list for a particular item or object. The Local ID is to be used for channels, tracks, zones, areas, regions, hardware I/O ports, etc. Please note that 'zero' (0) is the NULL ID which indicates that a new element/resource needs to be allocated."
-},
-{
-  "type": "record",
-  "name": "ReferenceID",
-  "fields": [
+  "namespace": "org.psialliance.plai",
+  "protocol": "kafka",
+  "type": [
     {
-      "name": "ID",
-      "type": ["null", "LocalID"],
-      "default": null
+      "type": "enum",
+      "name": "StateOfCredentialHolder",
+      "symbols": ["Inactive", "Active"]
     },
     {
-      "name": "GUID",
-      "type": "GlobalID"
-    },
-    {
-      "name": "Name",
-      "type": ["null", "string"],
-      "default": null
-    },
-    {
-      "name": "CustomExtension",
-      "type": ["null", {
-        "type": "array",
-        "items": "CommonTypeCustomExtension"
-      }],
-      "default": null
-    }
-  ]
-},
-{ 
-
-  "type": "record",
-  "name": "Permission",
-  "fields": [
-    {
-      "name": "ID",
-      "type": "LocalID"
-    },
-    {
-      "name": "UID",
-      "type": "GlobalID"
-    },
-    {
-      "name": "Name",
-      "type": ["null", "string"],
-      "default": null
-    },
-    {
-      "name": "Description",
-      "type": ["null", "string"],
-      "default": null
-    },
-    {
-      "name": "CustomExtension",
-      "type": ["null", {
-        "type": "array",
-        "items": "CommonTypeCustomExtension"
-      }],
-      "default": null
-    }
-  ]
-},
-{
-  "type": "record",
-  "name": "RoleInfo",
-  "fields": [
-    {
-      "name": "ID",
-      "type": "int"
-    },
-    {
-      "name": "UID",
-      "type": "GlobalID",
-      "doc": "A UID may be used when this definition should be shared across multiple systems."
-    },
-    {
-      "name": "Name",
-      "type": ["null", "string"],
-      "default": null
-    },
-    {
-      "name": "Description",
-      "type": ["null", "string"],
-      "default": null
-    },
-
-    {
-      "name": "PermisssionIDList",
-      "type": ["null", {
-        "type": "array",
-        "items": "Permission"
-      }],
-      "default": null
-    }, 
-    {
-      "name": "RoleInfoExtension",
-      "type": ["null", {
-        "type": "array",
-        "items": "AreaControlExtension"
-      }],
-      "default": null
-    }, 
-    {
-      "name": "version",
       "type": "string",
-      "doc": ""
-    }
-  ]
-},
-{
-  "type": "record",
-  "name": "CredentialHolderInfo",
-  "fields": [
+      "name": "GlobalID",
+      "doc": "The representation of a GUID, generally the id of an element.",
+      "avro.java.string": "String",
+      "avro.java.string.charset": "UTF-8",
+      "pattern": "\\{[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}\\}"
+    }, 
     {
-      "name": "ID",
-      "type": "int"
+      "type": "int",
+      "name": "LocalID",
+      "doc": "The representation of a 'Local ID' is based on an unsigned integer which represents, basically, the index in a resource list for a particular item or object. The Local ID is to be used for channels, tracks, zones, areas, regions, hardware I/O ports, etc. Please note that 'zero' (0) is the NULL ID which indicates that a new element/resource needs to be allocated."
     },
     {
-      "name": "UID",
-      "type": "GlobalID"
+      "type": "record",
+      "name": "ReferenceID",
+      "fields": [
+        {
+          "name": "ID",
+          "type": ["null", "LocalID"],
+          "default": null
+        },
+        {
+          "name": "GUID",
+          "type": "GlobalID"
+        },
+        {
+          "name": "Name",
+          "type": ["null", "string"],
+          "default": null
+        }
+      ]
+    },
+    { 
+
+      "type": "record",
+      "name": "Permission",
+      "fields": [
+        {
+          "name": "ID",
+          "type": "LocalID"
+        },
+        {
+          "name": "UID",
+          "type": "GlobalID"
+        },
+        {
+          "name": "Name",
+          "type": ["null", "string"],
+          "default": null
+        },
+        {
+          "name": "Description",
+          "type": ["null", "string"],
+          "default": null
+        }
+      ]
     },
     {
-      "name": "Name",
-      "type": "string"
+      "type": "record",
+      "name": "RoleInfo",
+      "fields": [
+        {
+          "name": "ID",
+          "type": "int"
+        },
+        {
+          "name": "UID",
+          "type": "GlobalID",
+          "doc": "A UID may be used when this definition should be shared across multiple systems."
+        },
+        {
+          "name": "Name",
+          "type": ["null", "string"],
+          "default": null
+        },
+        {
+          "name": "Description",
+          "type": ["null", "string"],
+          "default": null
+        },
+
+        {
+          "name": "PermissionIDList",
+          "type": ["null", {
+            "type": "array",
+            "items": "Permission"
+          }],
+          "default": null
+        }
+      ]
     },
     {
-      "name": "GivenName",
-      "type": ["null", "string"],
-      "default": null
-    },
-    {
-      "name": "MiddleName",
-      "type": ["null", "string"],
-      "default": null
-    },
-    {
-      "name": "Surname",
-      "type": ["null", "string"],
-      "default": null
-    },
-    {
-      "name": "Email",
-      "type": ["null", "string"],
-      "default": null,
-      "doc": "Credential-Holders Email Address, used for matching existing credential holders on an adapter with LDAP users."
-    },
-    {
-      "name": "DomainName",
-      "type": ["null", "string"],
-      "default": null,
-      "doc": "Credential-Holders Domain, used for matching existing credential holders on an adapter with LDAP users."
-    },
-    {
-      "name": "Description",
-      "type": ["null", "string"],
-      "default": null
-    },
-    {
-      "name": "CreationDate",
-      "type": ["null", {
-        "type": "long",
-        "logicalType": "date"
-      }],
-      "default": null,
-      "doc": "Date-time when this credential holder was created. May or may not be same as ActiveFrom date-time"
-    },
-    {
-      "name": "ActiveFrom",
-      "type": ["null", {
-        "type": "long",
-        "logicalType": "date"
-      }],
-      "default": null
-    },
-    {
-      "name": "ActiveTill",
-      "type": ["null", {
-        "type": "long",
-        "logicalType": "date"
-      }],
-      "default": null
-    },
-    {
-      "name": "State",
-      "type": "StateOfCredentialHolder" // Potentially mark as string
-    },
-    {
-      "name": "Disability",
-      "type": ["null", "boolean"],
-      "default": null,
-      "doc": "If true, use extended portal access time."
-    },
-    {
-      "name": "RoleInfoList",
-      "type": ["null", "RoleInfo"],
-      "default": null
-    },
-    {
-      "name": "CredentialHolderInfoExtension",
-      "type": ["null", {
-        "type": "array",
-        "items": "AreaControlExtension"
-      }],
-      "default": null
-    }
-  ]
-},
-{
-  "type": "record",
-  "name": "ReferenceID",
-  "fields": [
-    {
-      "name": "ID",
-      "type": ["null", "LocalID"],
-      "default": null
-    },
-    {
-      "name": "GUID",
-      "type": "GlobalID"
-    },
-    {
-      "name": "Name",
-      "type": ["null", "string"],
-      "default": null
-    },
-    {
-      "name": "CustomExtension",
-      "type": ["null", {
-        "type": "array",
-        "items": "CommonTypeCustomExtension"
-      }],
-      "default": null
-    }
+      "type": "record",
+      "name": "CredentialHolderInfo",
+      "fields": [
+        {
+          "name": "ID",
+          "type": "int"
+        },
+        {
+          "name": "UID",
+          "type": "GlobalID"
+        },
+        {
+          "name": "Name",
+          "type": "string"
+        },
+        {
+          "name": "GivenName",
+          "type": ["null", "string"],
+          "default": null
+        },
+        {
+          "name": "MiddleName",
+          "type": ["null", "string"],
+          "default": null
+        },
+        {
+          "name": "Surname",
+          "type": ["null", "string"],
+          "default": null
+        },
+        {
+          "name": "Email",
+          "type": ["null", "string"],
+          "default": null,
+          "doc": "Credential-Holders Email Address, used for matching existing credential holders on an adapter with LDAP users."
+        },
+        {
+          "name": "DomainName",
+          "type": ["null", "string"],
+          "default": null,
+          "doc": "Credential-Holders Domain, used for matching existing credential holders on an adapter with LDAP users."
+        },
+        {
+          "name": "Description",
+          "type": ["null", "string"],
+          "default": null
+        },
+        {
+          "name": "CreationDate",
+          "type": ["null", {
+            "type": "int",
+            "logicalType": "date"
+          }],
+          "default": null,
+          "doc": "Date-time when this credential holder was created. May or may not be same as ActiveFrom date-time"
+        },
+        {
+          "name": "ActiveFrom",
+          "type": ["null", {
+            "type": "int",
+            "logicalType": "date"
+          }],
+          "default": null
+        },
+        {
+          "name": "ActiveTill",
+          "type": ["null", {
+            "type": "int",
+            "logicalType": "date"
+          }],
+          "default": null
+        },
+        {
+          "name": "State",
+          "type": "StateOfCredentialHolder" 
+        },
+        {
+          "name": "Disability",
+          "type": ["null", "boolean"],
+          "default": null,
+          "doc": "If true, use extended portal access time."
+        },
+        {
+          "name": "RoleInfoList",
+          "type": ["null", {
+              "type": "array", "items": "RoleInfo"
+          }],
+          "default": null
+        }
+      ]
+    }    
   ]
 }
+
+
 
