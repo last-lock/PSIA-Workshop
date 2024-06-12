@@ -21,7 +21,10 @@ ENV ADMIN_PASSWORD_SECRET=samba-admin-password \
     SERVER_STRING="Samba Domain Controller" \
     TZ=CST \
     WINBIND_USE_DEFAULT_DOMAIN=yes \
-    WORKGROUP=AD
+    WORKGROUP=AD \
+    DNS_PORT=5353 
+    # DNS_PORT smb.conf.j2 modification
+
 
 ARG SAMBA_VERSION=4.18.9-r0
 
