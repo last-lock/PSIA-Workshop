@@ -1,11 +1,32 @@
-version: "3.1"
-
 services:
+  kafka-server:
+    image: apache/kafka:latest
+    container_name: kafka
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_PROCESS_ROLES: 'broker,controller'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      CLUSTER_ID: 'your-cluster-id'
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    networks:
+      - kafka-network
+
   samba-dc:
     image: samba-dc:latest # FIXME Build as samba-dc 
     build: 
       context: .
-      dockerfile: Dockerfile
+      dockerfile: samba/Dockerfile
     restart: always
     network_mode: host
     # networks: 
@@ -37,7 +58,7 @@ services:
       - 464:464/udp
       - 636:636
       - 3268-3269:3268-3269
-      - 49152-65535
+      - 49152-65535 # update for ephemeral
     secrets:
       - samba-admin-password
 
@@ -48,6 +69,7 @@ networks:
 volumes:
   etc:
   lib:
+  kafka-data:
 secrets:
   samba-admin-password:
-    file: ./secrets/samba-admin-password.txt
+    file: samba/secrets/samba-admin-password.txt

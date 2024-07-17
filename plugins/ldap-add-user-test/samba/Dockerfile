@@ -36,6 +36,12 @@ RUN apk add --update --no-cache krb5 ldb-tools samba-dc=$SAMBA_VERSION samba-win
     apk del py3-pip && \
     chmod 0755 /usr/local/bin/entrypoint.sh
 
+#FIXME Update user password
+RUN adduser -D testUser && \
+    echo "testUser:password1!" | chpasswd
+RUN (echo "password1!"; echo "password1!") | smbpasswd -s -a testUser
+
+
 VOLUME /etc/samba /var/lib/samba
 EXPOSE 53 53/udp 88 88/udp 135 137-138/udp 139 389 389/udp 445 464 464/udp 636 3268-3269 49152-65535
 
